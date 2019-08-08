@@ -14,7 +14,7 @@ $ vagrant up [name/id]
 $ vagrant halt [name/id]
 
 # Afficher le status de la machine courante
-$ vagrant status
+$ vagrant status [name/id]
 
 # Afficher le status de toutes les machines existantes
 $ vagrant global-status
