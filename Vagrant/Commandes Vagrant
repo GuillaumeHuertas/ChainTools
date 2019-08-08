@@ -7,6 +7,9 @@
 # Initialiser un projet 
 $ vagrant init "NOM DE LA BOX"
 
+# Forcer la réécriture
+$ vagrant init -f "NOM DE La BOXE"
+
 # Demarer une machine
 $ vagrant up [name/id]
 
