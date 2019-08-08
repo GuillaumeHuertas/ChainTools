@@ -1,0 +1,6 @@
+# Connection en root
+$ su
+# apt-get install ansible
+# Vérifier la version 
+$ ansible --version
+
