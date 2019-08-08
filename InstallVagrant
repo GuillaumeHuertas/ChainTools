@@ -1,0 +1,18 @@
+1 - Installer CURL
+$ su
+$ apt-get install curl -y
+
+# Installer rsync
+$ apt-get install rsync -y
+
+2 - Télécharger le package (choisir la bonne version depuis https://www.vagrantup.com/downloads.html )
+$ curl -O https://releases.hashicorp.com/vagrant/2.2.5/vagrant_2.2.5_x86_64.deb
+
+3 - Installer le fichier .deb téléchargé
+$ apt install ./vagrant_2.2.5_x86_64.deb -y
+
+4 - Pour vérifier l'installation 
+$ vagrant --version
+
+
+ 
