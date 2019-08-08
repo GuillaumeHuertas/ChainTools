@@ -1,0 +1,18 @@
+Installer VirtualBox sur Debian 10 Buster
+
+Now, you need to add Oracle VirtualBox PPA to Ubuntu system. You can do this by running the below command on your system.
+
+echo "deb http://download.virtualbox.org/virtualbox/debian stretch contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list
+
+
+After adding the required apt repository on your system, download and import the Oracle public key for apt-secure using following commands.
+
+wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
+
+You are ready now to install VirtualBox on a Debian system. Run the following commands on the terminal to complete the VirtualBox installation on a Debian system.
+
+sudo apt-get update
+sudo apt-get install virtualbox-6.0
+
+VBoxManage -v
