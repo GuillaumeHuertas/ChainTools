@@ -22,3 +22,6 @@ $ vagrant global-status
 # Supprimer une machine ( ne modifie pas l'image/box ) 
 $ vagrant destroy [name/id]
 
+# Se connecter en ssh
+$ vagrant ssh [name/id]
+
