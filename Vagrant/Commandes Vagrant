@@ -1,0 +1,23 @@
+# Vocabulaire :
+# BOX : image de base 
+# MACHINE : Vm instanciée a partir d'une box
+
+
+# Initialiser un projet 
+$ vagrant init "NOM DE LA BOX"
+
+# Demarer une machine
+$ vagrant up
+
+# Stopper une machine 
+$ vagrant halt
+
+# Afficher le status de la machine courante
+$ vagrant status
+
+# Afficher le status de toutes les machines existantes
+$ vagrant global-status
+
+# Supprimer une machine ( ne modifie pas l'image/box ) 
+$ vagrant destroy [name/id]
+
