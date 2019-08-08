@@ -1,0 +1,6 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "BOX A DEFINIR"
+  config.vm.network :public_network, :bridge => "enp3s0: Ethernet", ip: "IP A DEFINIR", :netmask => "MASQUE A DEFINIR"
+
+end
