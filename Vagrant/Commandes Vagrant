@@ -2,15 +2,16 @@
 # BOX : image de base 
 # MACHINE : Vm instanciée a partir d'une box
 
+#Si aucun nom ou id n'est précisé, Vagrant utilisera le Vagrantfile du dossier local
 
 # Initialiser un projet 
 $ vagrant init "NOM DE LA BOX"
 
 # Demarer une machine
-$ vagrant up
+$ vagrant up [name/id]
 
 # Stopper une machine 
-$ vagrant halt
+$ vagrant halt [name/id]
 
 # Afficher le status de la machine courante
 $ vagrant status
