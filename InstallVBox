@@ -16,3 +16,19 @@ sudo apt-get update
 sudo apt-get install virtualbox-6.0
 
 VBoxManage -v
+
+sudo apt update
+sudo apt upgrade
+apt-get install gnupg
+
+Step 2 – Setup Apt Repository
+su
+wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | apt-key add -
+wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | apt-key add -
+
+sudo add-apt-repository "deb http://download.virtualbox.org/virtualbox/debian bionic contrib"
+
+
+Step 3 – Install VirtualBox on Debian 10
+sudo apt update
+sudo apt install virtualbox-6.0
