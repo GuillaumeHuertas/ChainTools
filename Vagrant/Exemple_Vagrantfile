@@ -1,3 +1,5 @@
+#Ce fichier a été testé avec "centos/7" et "debian/jessie64". La machine est accessible depuis l'ip spécifié dans la configuration.
+
 Vagrant.configure("2") do |config|
 
   #Choix de la box a utiliser
@@ -9,10 +11,7 @@ Vagrant.configure("2") do |config|
   #Nom de la machine dans Vagrant
   config.vm.define "NOM DE LA BOX A DEFINIR"
   
-  
-  #Autoriser la connection avec mot de passe en ssh ( vagrant/vagrant ) 
+  #Autoriser la connection avec mot de passe en ssh ( user/password : vagrant/vagrant ) 
   config.vm.provision :shell, :inline => "sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; sudo systemctl restart sshd;", run: "always"
 
-
-  
 end
