@@ -2,6 +2,9 @@
 $ su
 # Modification adresse IP
 $ nano /etc/network/interfaces
+# Vérifier si l'adresse ip est disponible
+$ ping <adresse ip/serveur>
+
 
 Fichier de base : 
 
