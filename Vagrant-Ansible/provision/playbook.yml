@@ -1,0 +1,7 @@
+---
+- hosts: all
+  sudo: true
+  tasks:
+    -
+      apt: "name=tree"
+      name: "Installation du paquet TREE pour la beauté"  
