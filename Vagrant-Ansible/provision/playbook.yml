@@ -1,7 +1,13 @@
----
-- hosts: all
+--- 
+- 
+  hosts: all
   sudo: true
-  tasks:
-    -
-      apt: "name=tree"
-      name: "Installation du paquet TREE pour la beauté"  
+  tasks: 
+    - 
+      apt: name=tree
+      name: "Installation du paquet TREE pour la beauté"
+    - 
+      name: "update serveur"
+      apt:
+        update_cache: yes
+        upgrade: full
