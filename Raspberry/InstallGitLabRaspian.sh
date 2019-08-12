@@ -26,4 +26,8 @@ $ sudo gitlab-ctl reconfigure
 $ sudo apt-get install gitlab-runner
 # Modifier l'url par l'adresse ip du raspberry
 $ sudo nano /etc/gitlab/gitlab.rb
+# Reconfigure GitLab
+$ sudo gitlab-ctl reconfigure
+
+
 
