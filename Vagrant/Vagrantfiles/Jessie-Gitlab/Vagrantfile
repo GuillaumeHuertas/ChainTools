@@ -1,0 +1,50 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  # Box Debian 8 Jessie 64
+  config.vm.box = "debian/jessie64"
+  # Fixe l'adresse ip de la VM (changer le ip par une disppnible)
+  config.vm.network :public_network, :bridge => "enp3s0: Ethernet", ip: "192.168.206.47", :netmask => "255.255.255.128"
+  # Nom de la VM
+  config.vm.define "Gitlab-local"
+
+
+  config.vm.provider "virtualbox" do |vb|
+    # Display the VirtualBox GUI when booting the machine
+    vb.gui = false
+  
+     # Customize the amount of memory on the VM:
+     vb.memory = "4096"
+     vb.cpus = 3
+   end
+
+   config.vm.provision:shell, inline: <<-SHELL
+   sudo apt-get install curl -y
+   curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
+   sudo apt-get install gitlab-ce -y
+   sudo gitlab-ctl reconfigure
+   sudo apt-get install -y
+   sudo apt-get install apt-transport-https -y
+   sudo apt-get install ca-certificates -y
+   sudo apt-get install curl -y
+   sudo apt-get install gnupg2 -y
+   sudo apt-get install software-properties-common -y
+    curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+
+    sudo add-apt-repository \
+    "deb [arch=amd64] https://download.docker.com/linux/debian \
+    $(lsb_release -cs) \
+    stable"
+    sudo apt-get update
+    sudo apt-get install docker-ce -y
+    sudo apt-get install docker-ce-cli -y
+    sudo apt-get install containerd.io -y
+    curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | sudo bash
+    sudo apt-get install gitlab-runner -y
+
+
+   SHELL
+
+
+end
