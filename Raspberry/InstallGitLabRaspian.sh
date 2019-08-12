@@ -21,3 +21,9 @@ $ sudo apt-get install gitlab-ce
 $ sudo gitlab-ctl reconfigure
 # Se connecter à votre adresse local 
 # Par défaut le login est « root » et le mot de passe « 5iveL!fe »
+
+# Installer GitLab Runner
+$ sudo apt-get install gitlab-runner
+# Modifier l'url par l'adresse ip du raspberry
+$ sudo nano /etc/gitlab/gitlab.rb
+
