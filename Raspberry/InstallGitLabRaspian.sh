@@ -22,6 +22,17 @@ $ sudo gitlab-ctl reconfigure
 # Se connecter à votre adresse local 
 # Par défaut le login est « root » et le mot de passe « 5iveL!fe »
 
+# Installer GitLab 2
+# Mise-à-jour des pâquets
+$ sudo apt update
+# Instalaltion des pâquets nécessaires
+$ sudo apt install ca-certificates curl openssh-server postfix
+# Sé déplacer dans le dossier du script
+$ cd /tmp
+# Exécution du script d'installtion de GitLab 
+$ curl -LO https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh
+
+
 # Installer GitLab Runner
 $ sudo apt-get install gitlab-runner
 # Modifier l'url par l'adresse ip du raspberry
