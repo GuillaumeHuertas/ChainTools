@@ -1,0 +1,31 @@
+--- 
+- 
+  hosts: all
+  sudo: true
+  tasks: 
+    - 
+      apt: 
+        update_cache: true
+        upgrade: full
+      name: "Mise a jout des paquets"
+    - 
+      apt: name=curl
+      name: "Installe le curl"
+    - 
+      get_url: "url=https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh dest=/opt mode=755"
+      name: "Charger le script d'ajout des packages de gitlab"
+    - 
+      command: /opt/script.deb.sh
+      name: "Executer le script"
+    - 
+      apt: name=gitlab-ce
+      name: "Installer gitlab-ce"
+    - 
+      name: "Modifier le fichier de configuration gitlab pour parametrer l'adresse"
+      replace: 
+        destfile: /etc/gitlab/gitlab.rb
+        regexp: "http://gitlab.example.com"
+        replace: "http://{{ip}}/"
+    - 
+      name: "Lancer la reconfiguration de gitlab"
+      shell: "gitlab-ctl reconfigure"
