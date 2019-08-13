@@ -1,0 +1,41 @@
+CHOIX_DE_LA_BOX         ="debian/jessie64"
+NOM_DE_LA_MACHINE       ="Gitlab-local"
+IP_DE_LA_MACHINE        ="192.168.206.47"
+MASQUE_DE_SOUS_RESEAU   ="255.255.255.128"
+GITLAB_NAME             ="gitlab"
+
+Vagrant.configure("2") do |config|
+  # Box Debian 8 Jessie 64
+  config.vm.box = CHOIX_DE_LA_BOX
+  config.vm.define NOM_DE_LA_MACHINE
+  # Fixe l'adresse ip de la VM (changer le ip par une disppnible)
+  
+  config.vm.provision :shell, :inline => "sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; sudo systemctl restart sshd;", run: "always"
+  
+  config.vm.network :public_network, :bridge => "enp3s0: Ethernet", ip: IP_DE_LA_MACHINE, :netmask => MASQUE_DE_SOUS_RESEAU
+  
+  config.vm.provider "virtualbox" do |vb|
+    # Display the VirtualBox GUI when booting the machine
+    vb.gui = false
+    
+    # Customize the amount of memory on the VM:
+    vb.memory = "2048"
+    vb.cpus = 2
+  end
+  
+  config.vm.provision:shell, inline: <<-SHELL
+  
+  echo -e "\e[95m  INSTALLATIO DE CURL \e[39m"
+  sudo apt-get install curl -y
+  echo -e "\e[95m INSTALLATION DES DEPOTS GITLAB \e[39m"
+  curl -L https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
+  sudo apt-get update
+  echo -e "\e[95m INSTALLATION DE GITLAB \e[39m"
+  sudo apt-get install gitlab-ce -y
+  echo -e "\e[95m CONFIGURATION DE GITLAB \e[39m"
+  sudo sed -i 's&http://gitlab.example.com&http://#{IP_DE_LA_MACHINE}&g' /etc/gitlab/gitlab.rb
+  sudo gitlab-ctl reconfigure
+  SHELL
+  
+end
+
