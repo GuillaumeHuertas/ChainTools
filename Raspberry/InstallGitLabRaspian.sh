@@ -29,5 +29,11 @@ $ sudo nano /etc/gitlab/gitlab.rb
 # Reconfigure GitLab
 $ sudo gitlab-ctl reconfigure
 
+# Installer GitLab Runner 2
+# Récupère le script d'installation de gitlab-runner
+$ curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | sudo bash
+# Installer gitlab-runner
+$ sudo apt-get install gitlab-runner
+
 
 
