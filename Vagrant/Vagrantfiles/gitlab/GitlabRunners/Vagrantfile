@@ -1,0 +1,125 @@
+CHOIX_DE_LA_BOX         ="debian/jessie64"
+NOM_DE_LA_MACHINE       ="Runner01-05"
+IP_DE_LA_MACHINE        ="192.168.206.48"
+MASQUE_DE_SOUS_RESEAU   ="255.255.255.128"
+
+
+
+IP_GITLAB               ="192.168.206.47"
+TOKEN_GITLAB            ="XStzbDwXaMMLXqUNLDzQ"
+
+
+
+Vagrant.configure("2") do |config|
+  # Box Debian 8 Jessie 64
+  config.vm.box = CHOIX_DE_LA_BOX
+  config.vm.define NOM_DE_LA_MACHINE
+  # Fixe l'adresse ip de la VM (changer le ip par une disppnible)
+  
+  config.vm.provision :shell, :inline => "sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; sudo systemctl restart sshd;", run: "always"
+  
+  config.vm.network :public_network, :bridge => "enp3s0: Ethernet", ip: IP_DE_LA_MACHINE, :netmask => MASQUE_DE_SOUS_RESEAU
+  
+  config.vm.provider "virtualbox" do |vb|
+    # Display the VirtualBox GUI when booting the machine
+    vb.gui = false
+    
+    # Customize the amount of memory on the VM:
+    vb.memory = "4096"
+    vb.cpus = 2
+  end
+  
+  config.vm.provision:shell, inline: <<-SHELL
+
+  echo -e "\e[95m INSTALLATION DE CE QU'IL FAUT \e[39m"
+  sudo apt-get install apt-transport-https -y
+  sudo apt-get install ca-certificates -y
+  sudo apt-get install curl -y
+  sudo apt-get install gnupg2 -y
+  sudo apt-get install software-properties-common -y
+  echo -e "\e[95m INSTALLATION DEPOT DOCKER \e[39m"
+  curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+  echo -e "\e[95m LA MEME QUE PRECEDEMENT \e[39m"
+  sudo add-apt-repository \
+  "deb [arch=amd64] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) \
+  stable"
+  echo -e "\e[95m UNE PTITE UPDATA \e[39m"
+  sudo apt-get update
+  echo -e "\e[95m INSTALLATION DE DOCKER \e[39m"
+  sudo apt-get install docker-ce -y
+  sudo apt-get install docker-ce-cli -y
+  sudo apt-get install containerd.io -y
+  echo -e "\e[95m INSTALLATION DE GITLAB RUNNER \e[39m"
+  curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | sudo bash
+  sudo apt-get install gitlab-runner -y
+  echo -e "\e[95m TRUC POUR PAS SUDO LE DOCKER \e[39m"
+  sudo usermod -aG docker $USER
+
+  echo -e "\e[95m INSTALLATION DES RUNNERS \e[39m"
+
+  gitlab-runner register \
+  --non-interactive \
+  --url "http://#{IP_GITLAB}/" \
+  --executor "docker" \
+  --name "runner01" \
+  --registration-token #{TOKEN_GITLAB} \
+  --docker-image java:latest \
+  --tag-list "docker,java, gitlab,nsis,intm" \
+  --run-untagged="true" \
+  --locked="false" \
+  --access-level="not_protected"
+
+  gitlab-runner register \
+  --non-interactive \
+  --url "http://#{IP_GITLAB}/" \
+  --executor "docker" \
+  --name "runner02" \
+  --registration-token #{TOKEN_GITLAB} \
+  --docker-image java:latest \
+  --tag-list "docker,java, gitlab,nsis,intm" \
+  --run-untagged="true" \
+  --locked="false" \
+  --access-level="not_protected"
+
+  gitlab-runner register \
+  --non-interactive \
+  --url "http://#{IP_GITLAB}/" \
+  --executor "docker" \
+  --name "runner03" \
+  --registration-token #{TOKEN_GITLAB} \
+  --docker-image java:latest \
+  --tag-list "docker,java, gitlab,nsis,intm" \
+  --run-untagged="true" \
+  --locked="false" \
+  --access-level="not_protected"
+
+  gitlab-runner register \
+  --non-interactive \
+  --url "http://#{IP_GITLAB}/" \
+  --executor "docker" \
+  --name "runner04" \
+  --registration-token #{TOKEN_GITLAB} \
+  --docker-image java:latest \
+  --tag-list "docker,java, gitlab,nsis,intm" \
+  --run-untagged="true" \
+  --locked="false" \
+  --access-level="not_protected"
+
+
+  gitlab-runner register \
+  --non-interactive \
+  --url "http://#{IP_GITLAB}/" \
+  --executor "docker" \
+  --name "runner05" \
+  --registration-token #{TOKEN_GITLAB} \
+  --docker-image java:latest \
+  --tag-list "docker,java, gitlab,nsis,intm" \
+  --run-untagged="true" \
+  --locked="false" \
+  --access-level="not_protected"
+
+
+  SHELL
+  
+end
