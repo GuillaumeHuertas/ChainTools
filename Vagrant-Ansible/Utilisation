@@ -1,0 +1,6 @@
+# Première exécution 
+$ vagrant up
+# Après modification du Playbook
+$ vagrant reload
+# Lancer les provisions
+$ vagrant provision
