@@ -1,0 +1,28 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+IP_DE_LA_MACHINE        ="192.168.206.47"
+DISTRIB                 ="debian"
+Vagrant.configure("2") do |config|
+  # Box Debian 8 Jessie 64
+  config.vm.box = "debian/jessie64"
+  # Fixe l'adresse ip de la VM (changer le ip par une disppnible)
+  config.vm.network :public_network, :bridge => "enp3s0: Ethernet", ip: "192.168.206.47", :netmask => "255.255.255.128"
+  # Nom de la VM
+  config.vm.define "Jessie"
+  
+  config.vm.provision :shell, :inline => "sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; sudo systemctl restart sshd;", run: "always"
+  
+  
+  ###### PROVISION DE ANSIBLE ######
+  config.vm.provision "ansible_local" do |ansible|
+    ansible.playbook = "provision/playbook.yml"
+    ansible.verbose = true
+    ansible.install = true
+    ansible.install_mode = "apt"
+    
+    ansible.extra_vars = {
+    ip: IP_DE_LA_MACHINE,
+  }
+end
+
+end
