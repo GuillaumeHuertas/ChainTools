@@ -30,3 +30,9 @@
       apt: 
         name: 
           - docker-ce
+     -
+      name: "Add User"
+      user: 
+        name: vagrant
+        comment: Vagrant
+        group: docker 
