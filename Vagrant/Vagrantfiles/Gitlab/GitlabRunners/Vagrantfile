@@ -1,13 +1,14 @@
 CHOIX_DE_LA_BOX         ="debian/jessie64"
 NOM_DE_LA_MACHINE       ="Runner01-05"
-IP_DE_LA_MACHINE        ="192.168.206.48"
+IP_DE_LA_MACHINE        ="192.168.206.16"
 MASQUE_DE_SOUS_RESEAU   ="255.255.255.128"
 
+IP_GITLAB               ="192.168.206.15"
+TOKEN_GITLAB            ="HkqwsSU5zertDsG93Lzr"
 
 
-IP_GITLAB               ="192.168.206.47"
-TOKEN_GITLAB            ="XStzbDwXaMMLXqUNLDzQ"
-
+RAM_VM                  ="4096"
+NOMBRE_COEUR_VM         =2
 
 
 Vagrant.configure("2") do |config|
@@ -23,10 +24,9 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
     # Display the VirtualBox GUI when booting the machine
     vb.gui = false
-    
     # Customize the amount of memory on the VM:
-    vb.memory = "4096"
-    vb.cpus = 2
+    vb.memory = RAM_VM
+    vb.cpus = NOMBRE_COEUR_VM
   end
   
   config.vm.provision:shell, inline: <<-SHELL
@@ -58,7 +58,7 @@ Vagrant.configure("2") do |config|
 
   echo -e "\e[95m INSTALLATION DES RUNNERS \e[39m"
 
-  gitlab-runner register \
+  sudo gitlab-runner register \
   --non-interactive \
   --url "http://#{IP_GITLAB}/" \
   --executor "docker" \
@@ -70,7 +70,7 @@ Vagrant.configure("2") do |config|
   --locked="false" \
   --access-level="not_protected"
 
-  gitlab-runner register \
+  sudo gitlab-runner register \
   --non-interactive \
   --url "http://#{IP_GITLAB}/" \
   --executor "docker" \
@@ -82,7 +82,7 @@ Vagrant.configure("2") do |config|
   --locked="false" \
   --access-level="not_protected"
 
-  gitlab-runner register \
+  sudo gitlab-runner register \
   --non-interactive \
   --url "http://#{IP_GITLAB}/" \
   --executor "docker" \
@@ -94,7 +94,7 @@ Vagrant.configure("2") do |config|
   --locked="false" \
   --access-level="not_protected"
 
-  gitlab-runner register \
+  sudo gitlab-runner register \
   --non-interactive \
   --url "http://#{IP_GITLAB}/" \
   --executor "docker" \
@@ -107,7 +107,7 @@ Vagrant.configure("2") do |config|
   --access-level="not_protected"
 
 
-  gitlab-runner register \
+  sudo gitlab-runner register \
   --non-interactive \
   --url "http://#{IP_GITLAB}/" \
   --executor "docker" \
