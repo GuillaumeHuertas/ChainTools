@@ -30,9 +30,42 @@
       apt: 
         name: 
           - docker-ce
-     -
+    -
       name: "Add User"
       user: 
         name: vagrant
         comment: Vagrant
         group: docker 
+    - 
+      name: "Charger le script d'ajout des packages de gitlab-runner"
+      get_url: "url=https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh dest=/opt mode=755"
+    - 
+      name: "Executer le script"
+      command: /opt/script.deb.sh
+    - 
+      name: "Installer gitlab-runner"
+      apt: 
+        name: gitlab-runner
+    - 
+      name: "Création Runner"
+      shell: >
+        sudo gitlab-runner register 
+        --non-interactive 
+        --url "https://{{ip}}/" 
+        --executor "docker" 
+        --name "runner01" 
+        --registration-token {{token}} 
+        --docker-image java:latest 
+        --tag-list "docker,java, gitlab,nsis,intm" 
+        --run-untagged="true" 
+        --locked="false"
+        --access-level="not_protected"
+
+
+        
+      
+
+
+   
+        
+     
