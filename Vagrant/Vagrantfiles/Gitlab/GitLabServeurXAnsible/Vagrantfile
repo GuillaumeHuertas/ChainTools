@@ -1,16 +1,35 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-IP_DE_LA_MACHINE        ="192.168.206.47"
-DISTRIB                 ="debian"
+
+CHOIX_DE_LA_BOX         ="debian/jessie64"
+NOM_DE_LA_MACHINE       ="Ansible-Serveur-Gitlab"
+IP_DE_LA_MACHINE        ="192.168.206.14"
+MASQUE_DE_SOUS_RESEAU   ="255.255.255.128"
+
+RAM_VM                  ="2048"
+NOMBRE_COEUR_VM         =2
+
 Vagrant.configure("2") do |config|
-  # Box Debian 8 Jessie 64
-  config.vm.box = "debian/jessie64"
-  # Fixe l'adresse ip de la VM (changer le ip par une disppnible)
-  config.vm.network :public_network, :bridge => "enp3s0: Ethernet", ip: "192.168.206.47", :netmask => "255.255.255.128"
-  # Nom de la VM
-  config.vm.define "Jessie"
+  #Choix de la box a utiliser
+  config.vm.box = CHOIX_DE_LA_BOX
+    
+  #Parametrage du réseau en bridge depuis la carte "enp3s0"
+  config.vm.network :public_network, :bridge => "enp3s0: Ethernet", ip: IP_DE_LA_MACHINE, :netmask => MASQUE_DE_SOUS_RESEAU
+  
+  #Nom de la machine dans Vagrant
+  config.vm.define NOM_DE_LA_MACHINE
   
   config.vm.provision :shell, :inline => "sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; sudo systemctl restart sshd;", run: "always"
+  
+  
+  # Configuration de la VM
+  config.vm.provider "virtualbox" do |vb|
+    # Display the VirtualBox GUI when booting the machine
+    vb.gui = false
+    # Customize the amount of memory on the VM:
+    vb.memory = RAM_VM
+    vb.cpus = NOMBRE_COEUR_VM
+  end
   
   
   ###### PROVISION DE ANSIBLE ######
