@@ -1,0 +1,4 @@
+Afin de parametrer l'envoie de mail depuis GitLab, suivre le lien suivant :
+https://docs.gitlab.com/omnibus/settings/smtp.html
+
+Penser a bien choisir le bon serveur de mail
