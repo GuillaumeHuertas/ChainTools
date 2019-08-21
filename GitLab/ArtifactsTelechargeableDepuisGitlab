@@ -1,0 +1,23 @@
+En cas de soucis, impossibilité de télécharger les artifacts, ce code permet de contourner l'erreur
+
+
+
+
+
+codeception_tests:
+  stage: test
+  script:
+  - mvn test
+  after_script:
+  - mkdir ${CI_PROJECT_DIR}/artifacts
+  - mkdir ${CI_PROJECT_DIR}/artifacts/codecept
+  - cp target/surefire-reports ${CI_PROJECT_DIR}/artifacts/codecept -R
+  artifacts:
+    paths:
+      - ${CI_PROJECT_DIR}/artifacts/
+    expire_in: 5 days
+    when: always
+
+
+
+CREDIT : https://stackoverflow.com/questions/56545429/gitlab-ci-build-not-uploading-artifacts-of-codeception/56675792#56675792
