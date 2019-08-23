@@ -1,4 +1,4 @@
-# Installation de l'open JDL 8 
+# Installation de l'open JDK 8 
 
 # Télécharge l'archive du JDK 8 
 $ wget https://download.java.net/openjdk/jdk8u40/ri/openjdk-8u40-b25-linux-x64-10_feb_2015.tar.gz
@@ -21,8 +21,8 @@ $ touch /etc/profile.d/javamaven.sh
 # Attribution des droits pour l'exécution 
 $ chmod 755 /etc/profile.d/javamaven.sh
 # Les lignes ajoutés au javamaven.sh
-# JAVA_HOME=/opt/jdk-8
-# PATH=${JAVA_HOME}/bin:${PATH}
+## JAVA_HOME=/opt/jdk-8
+## PATH=${JAVA_HOME}/bin:${PATH}
 
 # export JAVA_HOME PATH
 

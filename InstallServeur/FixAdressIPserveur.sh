@@ -1,3 +1,5 @@
+# Ces commandes permettent de fixer l'adresse IP du serveur Debian
+
 # root
 $ su
 # Modification adresse IP
