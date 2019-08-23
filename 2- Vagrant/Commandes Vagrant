@@ -22,9 +22,15 @@ $ vagrant status [name/id]
 # Afficher le status de toutes les machines existantes
 $ vagrant global-status
 
+# Vide le cache des VM
+$ vagrant global-status --prune
+
 # Supprimer une machine ( ne modifie pas l'image/box ) 
 $ vagrant destroy [name/id]
 
 # Se connecter en ssh
 $ vagrant ssh [name/id]
+
+# Vérifier le fichier Vagrantfile
+$ vagrant validate
 
