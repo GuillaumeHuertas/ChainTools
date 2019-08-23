@@ -1,0 +1,29 @@
+# Créer une VM
+$ vagrant init NOM_DE_LA_BOX
+
+# Démarrer une VM
+$ vagrant up
+
+# Eteindre la VM 
+$ vagrant halt
+
+# Recharger une VM
+$ vagrant reload
+
+# Se connecter à la machine en SSH
+$ vagrant ssh
+
+# Supprimer une VM
+$ vagrant destroy
+
+# Etat de la machine 
+$ vagrant status
+
+# Etat de toutes les VM
+$ vagrant global-status
+
+# Etat de toutes les VM en vidant le cache
+$ vagrant global-status --prune
+
+# Vérifier le fichier Vagrantfile
+$ vagrant validate
