@@ -1,0 +1,47 @@
+--- 
+- 
+  hosts: all
+  sudo: true
+  tasks: 
+    - 
+      apt: 
+        update_cache: true
+        upgrade: full
+      name: "Mise à jour des paquets"
+    - 
+      apt: name=curl
+      name: "Installe curl"
+    - 
+      get_url: "url=https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh dest=/opt mode=755"
+      name: "Charger le script d'ajout des packages de gitlab"
+    - 
+      command: /opt/script.deb.sh
+      name: "Executer le script"
+    - 
+      apt: name=gitlab-ce
+      name: "Installer gitlab-ce"
+    - 
+      name: "Modifier le fichier de configuration gitlab pour paramétrer l'adresse du serveur"
+      replace: 
+        destfile: /etc/gitlab/gitlab.rb
+        regexp: "http://gitlab.example.com"
+        replace: "http://{{ip}}/"
+    - 
+      name: "Modifier le fichier de configuration gitlab pour parametrer un serveur mail"
+      replace: 
+        destfile: /etc/gitlab/gitlab.rb
+        regexp: "### Email Settings"
+        replace: "### Email Settings\n\
+            gitlab_rails['smtp_enable'] = true \n\
+            gitlab_rails['smtp_address'] = \"smtp.gmail.com\"\n\
+            gitlab_rails['smtp_port'] = 587\n\
+            gitlab_rails['smtp_user_name'] = \"gitlabformation@gmail.com\"\n\
+            gitlab_rails['smtp_password'] = \"gitlab1234\"\n\
+            gitlab_rails['smtp_domain'] = \"smtp.gmail.com\"\n\
+            gitlab_rails['smtp_authentication'] = \"login\"\n\
+            gitlab_rails['smtp_enable_starttls_auto'] = true\n\
+            gitlab_rails['smtp_tls'] = false\n\
+            gitlab_rails['smtp_openssl_verify_mode'] = 'peer'\n"
+    - 
+      name: "Lancer la reconfiguration de gitlab"
+      shell: "gitlab-ctl reconfigure"

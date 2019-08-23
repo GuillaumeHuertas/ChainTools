@@ -1,0 +1,71 @@
+--- 
+- 
+  hosts: all
+  sudo: true
+  tasks: 
+    - 
+      apt: 
+        update_cache: true
+        upgrade: full
+      name: "Mise à jour des paquets"
+    - 
+      apt: 
+        name: 
+          - curl
+          - gnupg2
+          - apt-transport-https
+          - ca-certificates
+          - software-properties-common
+      name: "Installation des programmes"
+    - 
+      apt_key: "url=https://download.docker.com/linux/debian/gpg validate_certs=no"
+      name: "Ajout de la clé"
+    - 
+      apt_repository: 
+        repo: "deb [arch=amd64] https://download.docker.com/linux/debian jessie stable"
+      name: "Ajout du depot docker"
+    - 
+      apt: 
+        name: 
+          - docker-ce
+      name: "Installation de Docker"
+    - 
+      name: "Ajout de l'utilisateur Vagrant au groupe Docker"
+      user: 
+        comment: Vagrant
+        group: docker
+        name: vagrant
+    - 
+      get_url: "url=https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh dest=/opt mode=755"
+      name: "Charger le script d'ajout des packages de gitlab-runner"
+    - 
+      command: /opt/script.deb.sh
+      name: "Executer le script"
+    - 
+      apt: 
+        name: gitlab-runner
+      name: "Installer gitlab-runner"
+    - 
+      loop: 
+        - 
+          image: "debian:jessie"
+          name: "Runner 1"
+          tags: "java, docker, intm, Debian"
+        - 
+          image: "maven:3-jdk-8"
+          name: "Runner 2"
+          tags: "maven, java, docker, intm, Debian"
+      name: "Création des Runners"
+      shell: >
+        sudo gitlab-runner register
+        --non-interactive 
+        --url "{{ url }}" 
+        --executor "docker" 
+        --name "{{ item.name }}" 
+        --registration-token {{token}} 
+        --docker-image {{ item.image }}
+        --tag-list "{{ item.tags }}" 
+        --run-untagged="true" 
+        --locked="false" 
+        --access-level="not_protected"
+      
