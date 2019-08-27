@@ -27,3 +27,9 @@ $ docker-machine env testbox01
 $ eval $(docker-machine env testbox01)
 // Déterminer la machine Docker Machine active
 $ docker-machine active
+
+// Infos 
+$ docker-machine config testbox01
+$ docker-machine inspect testbox01
+// Récupérer l'IP de la VM
+$ docker-machine ip testbox01
