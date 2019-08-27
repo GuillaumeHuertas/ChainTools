@@ -9,3 +9,6 @@ $ cd /usr/local/bin/
 $ chmod +x docker-machine
 # Lance Docker Machine
 $ chmod +x docker-machine
+
+# Création d'une première VM avec Docker Machine
+$ docker-machine create -d virtualbox testbox01
