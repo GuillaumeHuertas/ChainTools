@@ -19,4 +19,11 @@ mdp : tcuser
 Connection ssh 
 $ docker-machine ssh NOM_DE_LA_MACHINE
 
-@FOR /f "tokens=*" %i IN ('docker-machine env testbox01') DO @%i
+
+// Permet d'utiliser le client docker sur la barre métal pour controler le serveur Docker sur la VM 
+$ docker-machine env testbox01
+///Win10 >>>@FOR /f "tokens=*" %i IN ('docker-machine env testbox01') DO @%i
+// Pour Linux
+$ eval $(docker-machine env testbox01)
+// Déterminer la machine Docker Machine active
+$ docker-machine active
