@@ -1,0 +1,14 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box ="ubuntu/xenial64"
+  config.vm.network "public_network"
+  config.vm.provider "virtualbox" do |vb|
+    vb.name ="Agent1"
+  end
+  config.vm.hostname = "Agent1"
+  config.vm.provision "docker" do |d|
+    d.pull_images "busybox"
+  end
+end
