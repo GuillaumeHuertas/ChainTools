@@ -37,3 +37,14 @@ $ docker-machine inspect testbox01
 // Récupérer l'IP de la VM
 
 $ docker-machine ip testbox01
+
+$ docker-machine stop NOM_DE_LA_MACHINE
+
+$ docker-machine start NOM_DE_LA_MACHINE
+
+$ docker-machine restart NOM_DE_LA_MACHINE
+
+$ docker-machine rm NOM_DE_LA_MACHINE
+
+$ docker-machine upgrade
+NOM_DE_LA_MACHINE
