@@ -12,3 +12,11 @@ $ chmod +x docker-machine
 
 # Création d'une première VM avec Docker Machine
 $ docker-machine create -d virtualbox testbox01
+Afficher les variables d'environnemnt 
+$ docker-machine env testbox01
+user : docker
+mdp : tcuser
+Connection ssh 
+$ docker-machine ssh NOM_DE_LA_MACHINE
+
+@FOR /f "tokens=*" %i IN ('docker-machine env testbox01') DO @%i
