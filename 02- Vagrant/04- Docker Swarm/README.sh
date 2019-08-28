@@ -13,7 +13,7 @@
     
   # Création d'un service Docker 
   
-  # Ajoute un service nginx au cluster
+  # Ajoute un service nginx au clusterdock
   $ docker service create --name web -p 80:80 nginx
   # Liste les services du cluster
   $ docker service ls
@@ -21,4 +21,7 @@
   $ curl http://localhost
   # Sur un navigateur 
   $ http://localhost
+  
+  # Liste les services 
+  $ docker service ls
     
