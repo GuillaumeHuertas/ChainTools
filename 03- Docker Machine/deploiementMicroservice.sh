@@ -85,8 +85,11 @@ ID                  NAME                IMAGE                               NODE
 zmcl3wimr32w        mastack_db.1        mongo:3.2                           testbox01           Running             Running about an hour ago
 posx9cff4c4e        mastack_app.1       guillaumehuertas/sample-app-1:1.0   testbox02           Running             Running about an hour ago
 
+# Inspecte les ponts
+$ docker network inspect docker_gwbridge
 
-
+# Passage à léchelle 
+$ docker service scale mastack_app=3
 
 
 
