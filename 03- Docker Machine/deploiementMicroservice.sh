@@ -70,6 +70,23 @@ $ docker push guillaumehuertas/sample-app-1:1.0
 # Supprime une stack
 $ docker stack rm mastack
 
+# Lancer une stack 
+$ docker stack deploy -c ./docker-compose.yml mastack
+# Vérifier que la stack est bien lancé 
+$ docker stack ls
+
+NAME                SERVICES            ORCHESTRATOR
+mastack             2                   Swarm
+
+# Détail dela stack 
+$ docker stack ps mastack
+
+ID                  NAME                IMAGE                               NODE                DESIRED STATE       CURRENT STATE               ERROR               PORTS
+zmcl3wimr32w        mastack_db.1        mongo:3.2                           testbox01           Running             Running about an hour ago
+posx9cff4c4e        mastack_app.1       guillaumehuertas/sample-app-1:1.0   testbox02           Running             Running about an hour ago
+
+
+
 
 
 
