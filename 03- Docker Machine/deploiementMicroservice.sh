@@ -67,6 +67,11 @@ Login Succeeded
 # Envoyer l'image sur DockerHub
 $ docker push guillaumehuertas/sample-app-1:1.0
 
+# Supprime une stack
+$ docker stack rm mastack
+
+
+
 
 
 
