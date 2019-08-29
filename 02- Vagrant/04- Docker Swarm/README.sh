@@ -24,4 +24,7 @@
   
   # Liste les services 
   $ docker service ls
+  
+  # Changement d'échelle
+  $ docker service scale app=3
     
