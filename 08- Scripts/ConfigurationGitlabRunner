@@ -1,0 +1,28 @@
+sudo gitlab-runner register \
+  --non-interactive \
+  --url "https://192.168.206.44/" \
+  --registration-token "PROJECT_REGISTRATION_TOKEN" \
+  --executor "docker" \
+  --docker-image docker:latest \
+  --description "docker-runner" \
+  --tag-list "docker,aws, java, maven" \
+  --run-untagged="true" \
+  --locked="false" \
+  --docker-privileged \
+  --access-level="not_protected"
+  
+  ------------------------------------------------------------------
+  
+  Sinon modifier le fichier /etc/gitlab-runner/config.toml
+  dans chaque runner modifier :
+  privileged : true
+  
+  ------------------------------------------------------------------
+  
+  pour utiliser un registry docker local dans le dockerfile :
+  Usage de dockerDind et preciser le registry local
+  
+  image: docker:18.03
+  services:
+    - name: docker:18.03-dind
+      command: ["--insecure-registry=192.168.206.27:5000"]
