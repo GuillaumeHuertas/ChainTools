@@ -1,5 +1,7 @@
 #Il faut au préalable faire un cluster avec un Manager et deux Agents
 
+
+#################################################################
 echo "Déploiment manuel"
 # Créer et se déplacer dans le dossier DevOps
 mkdir DevOps && cd DevOps
@@ -56,6 +58,12 @@ curl -X DELETE http://localhost:8080
 docker service scale app=3
 # Liste les services 
 docker ps
+
+#################################################################
+echo "Déploiement automatisé"
+# Supprime les containers et le network
+docker service rm db app
+docker network rm reseau
 
 
 
