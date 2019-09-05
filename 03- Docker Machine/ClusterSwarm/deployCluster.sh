@@ -34,6 +34,8 @@ docker service inspect [ID service]
 # Premier Test
 curl -X DELETE http://localhost:8080/
 # Pas de réponse ctrl+c
+# Lister les service 
+docker service ls
 # Inspecter les logs
 docker logs [ID Container]
 # Suppression des services
@@ -48,6 +50,18 @@ docker service create --name app --network reseau --publish 8080:80 node-app
 
 # Relancer le test 
 curl -X DELETE http://localhost:8080
+
+# Passage à l'échelle
+# Lance trois instance de app
+docker service scale app=3
+# Liste les services 
+docker ps
+
+
+
+
+
+
 
 
 
