@@ -7,3 +7,11 @@ $ mkdir DevOps && cd DevOps
 $ git clone https://github.com/EditionsENI/sample-app-1.git-1
 # Se mettre en version 1.0 du projet
 $ git checkout v1.0
+
+# Vérifier que tous les noeuds sont bien présents
+$ docker node ls
+# Récupérer l'image MongoDB
+$ docker pull mongo:3.2
+# Se déplace dans l'appli
+ cd node-app
+
