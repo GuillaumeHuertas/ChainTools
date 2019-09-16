@@ -150,6 +150,20 @@ mongo 172.18.0.2:27017
 # PAssage à l'échelle de app
 docker service scale mastack_app=3
 
+# Refaites des POST
+# Puis faites un docker ps pour obtenir l'ID d'un conteneur app (faites le tours de vos vm)
+# Vérifier les logs pour voir si  le loadbalancing fonctionne
+docker logs e40548782041
+
+# Résultats après 6 POST 
+App listening on port 80
+POST / 200 110.229 ms - 13
+POST / 200 16.498 ms - 13
+GET / 200 10.139 ms - 2
+
+
+
+
 
 
 
