@@ -65,6 +65,44 @@ echo "Déploiement automatisé"
 docker service rm db app
 docker network rm reseau
 
+# Instancier la stack
+docker stack deploy -c ./docker-compose.yml mastack
+
+# tag l'image node-app-1
+docker tag node-app guillaumehuertas/sample-app-1:1.0
+# On vérifie que la stack est bien lancé 
+docker stack ls
+docker stack ps mastack
+
+docker images 
+
+# Connection au compte DockerHub
+docker login
+
+# Charge l'image dans le registre public
+docker push guillaumehuertas/sample-app-1:1.0
+
+# Modifier le Dockerfile pour préciser le registre
+
+version: '3'
+services:
+  db:
+    image: mongo:3.2
+  app:
+    build: guillaumehuertas/sample-app-1:1.0
+    ports:
+      - "8080:80"
+
+# Déployer la stack
+docker deploy -c ./docker-compose.yml mastack
+# Vérifier que la stack a été instancié 
+docker stack ls
+# Voir l'état de fonctionnement de la stack 
+docker stack ps mastack
+# Voir plus en détail les services 
+docker stack services mastack
+
+
 
 
 
