@@ -93,6 +93,8 @@ services:
     ports:
       - "8080:80"
 
+# Supprimer la stack
+docker stack rm mastack
 # Déployer la stack
 docker deploy -c ./docker-compose.yml mastack
 # Vérifier que la stack a été instancié 
@@ -101,6 +103,78 @@ docker stack ls
 docker stack ps mastack
 # Voir plus en détail les services 
 docker stack services mastack
+# Si il n'y a qu'une stack équivalent
+docker service ls
+
+# Inspecter en détail un service 
+docker service inspect mastack_app
+# Pour vérifier les network disponible 
+docker network ls
+# Celui de la stack : mastack_default
+
+# Appel de la fonction
+curl -X DELETE http://localhost:8080/
+
+# Vérifier l'overlay network par pont
+docker network inspect docker_gwbridge
+# Rechercher les adresse IP dans containers
+# Il est pour le moment obligatoire de parcourir les différentes vm du cluster
+
+# Vérifier que l'application fonctionne avec SON adresse IP
+curl -X DELETE http://172.18.0.3/
+curl -X POST http://172.18.0.3/
+curl -X POST http://172.18.0.3/
+curl -X POST http://172.18.0.3/
+curl -X POST http://172.18.0.3/
+curl http://172.18.0.3/
+# Ces commandes devraient vous retourner 4
+
+# Récupérez l'adresse IP ingress
+docker network inspect docker_gwbridge
+# Cette fois pn utilise bien le port 8080
+curl -X POST http://172.18.0.2:8080/
+curl -X POST http://172.18.0.2:8080/
+curl -X POST http://172.18.0.2:8080/
+curl http://172.18.0.2:8080/
+# Ici si on ne spécifie pas le port une erreur sera levé : Connection refused
+
+# Pour se connecter directement à la DB Mongo, il faut spécifier un port dans le docker-compose
+db:
+  image: mongo:3.2
+  ports:
+    - "27017:27017"
+    
+# On peut ensuite directement se connecter à la DB
+mongo 172.18.0.2:27017
+
+# PAssage à l'échelle de app
+docker service scale mastack_app=3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
