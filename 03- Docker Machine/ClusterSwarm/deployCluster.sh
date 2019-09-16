@@ -161,6 +161,14 @@ POST / 200 110.229 ms - 13
 POST / 200 16.498 ms - 13
 GET / 200 10.139 ms - 2
 
+# MAJ de la stack
+docker stack deploy
+# Rédupérer l'ip du manager 
+ip addr
+# Lancer un navigateur web 
+192.168.206.2:8080
+
+
 # On peut finallement détruire la stack 
 docker stack rm mastack
 
