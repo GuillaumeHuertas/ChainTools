@@ -1,0 +1,5 @@
+La grammaire Docker-compose
+
+Il est possible de  créer en plus du fichier docker-compose.yml un fichier docker-compose.override.yml qui va venir surcharger le premier. 
+Par convention la partie fixe de l'application (liste des services, dépendances entre eux, etc.) se trouve dans le docker-compose.yml, 
+le second prendra en compte les changements d'envirronement, les redirections de prots, les valeurs des variables d'environnement, etc. 
