@@ -1,0 +1,94 @@
+stages:
+  - test
+  - build 
+  - dockerisation 
+  - deploy 
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+
+
+####################     ANGULAR     ######################
+
+job_angular_docker_build:
+  stage: dockerisation
+  image: docker:18.03
+  services:
+    - name: docker:18.03-dind
+      command: ["--insecure-registry=192.168.206.27:5000"]
+  before_script:
+    - docker info
+  script:
+    - cd angularApp
+    - docker build -t 192.168.206.27:5000/angularapp:"$CI_COMMIT_SHORT_SHA" .
+    - docker tag 192.168.206.27:5000/angularapp:"$CI_COMMIT_SHORT_SHA" 192.168.206.27:5000/angularapp:latest
+    - docker push 192.168.206.27:5000/angularapp
+
+######################    MAVEN    ########################
+job_maven_test_1:
+  stage: test
+  image: maven:3-jdk-8
+  script:
+    - mvn test
+  artifacts:
+    name: "Echec 1"
+    when: on_failure
+    paths: 
+      - target/
+
+
+
+job_maven_test_2:
+  stage: test
+  image: maven:3-jdk-8
+  script:
+    - mvn test
+  artifacts:
+    name: "Echec 2"
+    when: on_failure
+    paths: 
+      - target/
+
+
+   
+
+job_maven_install:
+  stage: build
+  image: maven:3-jdk-8
+  script:
+    - mvn install
+  artifacts: 
+    name: "Le jar"
+    when: on_success
+    paths: 
+      - target/
+
+
+
+job_maven_docker_build:
+  stage: dockerisation
+  image: docker:18.03
+  services:
+    - name: docker:18.03-dind
+      command: ["--insecure-registry=192.168.206.27:5000"]
+  before_script:
+    - docker info
+  script:
+    - docker build -t 192.168.206.27:5000/backendjava:"$CI_COMMIT_SHORT_SHA" .
+    - docker tag 192.168.206.27:5000/backendjava:"$CI_COMMIT_SHORT_SHA" 192.168.206.27:5000/backendjava:latest
+    - docker push 192.168.206.27:5000/backendjava
+  dependencies:
+    - job_maven_install
+
+  
+#job_deploy:
+#  stage: deploy
+#  image: ubuntu:latest
+#  script:
+#    - apt-get update
+#    - apt-get install sshpass -y
+#    - apt-get install openssh-client -y
+#    - sshpass -p 'user' scp -o StrictHostKeyChecking=no docker-compose.yml user@192.168.206.27:~/docker-compose.yml
+#    - sshpass -p 'user' ssh -o StrictHostKeyChecking=no user@192.168.206.27 docker-compose up -d
+#    - sshpass -p 'user' ssh -o StrictHostKeyChecking=no user@192.168.206.27 rm docker-compose.yml
