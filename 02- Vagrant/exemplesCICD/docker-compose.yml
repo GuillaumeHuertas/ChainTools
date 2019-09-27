@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  backend:
+    image: 192.168.206.27:5000/backendjava:latest
+    ports:
+      - 8080:8080
+  database:
+    image: postgres:11.2
+    environment:
+      - POSTGRES_DB=jintm
+      - POSTGRES_USER=jintm
+      - POSTGRES_PASSWORD=jintm
+    volumes:
+      - /home/vagrant/data/postgres-data:/var/lib/postgresql/data
+  front:
+    image: 192.168.206.27:5000/angularapp:latest
+    ports:
+      - 80:80
+
